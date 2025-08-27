@@ -9,7 +9,6 @@ use App\Http\Controllers\ServiceRequestController;
 use App\Http\Controllers\CustomerDashboardController;
 use App\Http\Controllers\DriverDashboardController;
 
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -53,6 +52,7 @@ Route::prefix('driver')->group(function () {
 Route::middleware('auth:customer')->group(function () {
     Route::get('/customer/dashboard', [CustomerDashboardController::class, 'index'])->name('customer.dashboard');
 
+    // Existing servicing request routes
     Route::get('/service-requests/create', [ServiceRequestController::class, 'create'])->name('service_requests.create');
     Route::post('/service-requests', [ServiceRequestController::class, 'store'])->name('service_requests.store');
 });
