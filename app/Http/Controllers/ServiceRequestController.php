@@ -25,10 +25,27 @@ class ServiceRequestController extends Controller
         $data['status'] = 'pending';
         $data['duration_minutes'] = 30;
 
-        ServiceRequest::create($data);
+        // Create the service request and get the instance
+        $serviceRequest = ServiceRequest::create($data);
 
-        return redirect()->route('customer.dashboard')->with('success', 'Service request submitted successfully.');
+        // Redirect to the wait time page for the created request
+        return redirect()->route('service_requests.wait_time', $serviceRequest->id)
+                         ->with('success', 'Service request submitted successfully. Estimated wait time shown.');
     }
-    
+
+    // Show estimated wait time and countdown screen
+    public function showWaitTime($id)
+    {
+        $serviceRequest = ServiceRequest::findOrFail($id);
+
+        // Calculate estimated wait time in seconds
+        $waitInSeconds = $serviceRequest->duration_minutes * 60;
+
+        return view('service_requests.wait_time', [
+            'serviceRequest' => $serviceRequest,
+            'waitInSeconds' => $waitInSeconds,
+        ]);
+    }
+
     // Other methods...
 }
