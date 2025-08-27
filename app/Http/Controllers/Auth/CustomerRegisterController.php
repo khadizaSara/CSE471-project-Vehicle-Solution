@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerRegisterController extends Controller
 {
@@ -24,8 +25,9 @@ class CustomerRegisterController extends Controller
             'role' => 'customer',
         ]);
 
-        auth()->guard('customer')->login($customer);
+        Auth::guard('customer')->login($customer);
 
-        return redirect()->route('customer.login');
+        // Redirect to customer dashboard after registration and login
+        return redirect()->route('customer.dashboard');
     }
 }

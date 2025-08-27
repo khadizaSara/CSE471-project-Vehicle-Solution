@@ -6,11 +6,17 @@ use App\Http\Controllers\Auth\DriverRegisterController;
 use App\Http\Controllers\Auth\CustomerLoginController;
 use App\Http\Controllers\Auth\DriverLoginController;
 use App\Http\Controllers\ServiceRequestController;
+use App\Http\Controllers\CustomerDashboardController;
 
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Fallback login route for Laravel auth middleware
+Route::get('/login', function () {
+    return redirect()->route('customer.login.form');
+})->name('login');
 
 // Customer registration and login routes
 Route::prefix('customer')->group(function () {
@@ -42,9 +48,10 @@ Route::prefix('driver')->group(function () {
     Route::post('/logout', [DriverLoginController::class, 'logout'])->name('driver.logout')->middleware('auth:driver');
 });
 
-
+// Protected routes for authenticated customers
 Route::middleware('auth:customer')->group(function () {
+    Route::get('/customer/dashboard', [CustomerDashboardController::class, 'index'])->name('customer.dashboard');
+
     Route::get('/service-requests/create', [ServiceRequestController::class, 'create'])->name('service_requests.create');
     Route::post('/service-requests', [ServiceRequestController::class, 'store'])->name('service_requests.store');
 });
-

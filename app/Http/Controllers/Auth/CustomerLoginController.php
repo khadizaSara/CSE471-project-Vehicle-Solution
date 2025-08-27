@@ -15,13 +15,20 @@ class CustomerLoginController extends Controller
             'password' => 'required|string',
         ]);
 
-        if (Auth::guard('customer')->attempt(['email' => $credentials['email'], 'password' => $credentials['password'], 'role' => 'customer'])) {
+        if (Auth::guard('customer')->attempt([
+            'email' => $credentials['email'],
+            'password' => $credentials['password'],
+            //'role' => 'customer',
+        ])) {
             $request->session()->regenerate();
 
-            return view('customer.login');
+            // Redirect to customer dashboard after login
+            return redirect()->route('customer.dashboard');
         }
 
-        return response()->json(['message' => 'Invalid credentials'], 401);
+        return back()->withErrors([
+            'email' => 'Invalid credentials',
+        ])->withInput();
     }
 
     public function logout(Request $request)
@@ -31,6 +38,6 @@ class CustomerLoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return response()->json(['message' => 'Customer logged out']);
+        return redirect()->route('customer.login.form');
     }
 }
