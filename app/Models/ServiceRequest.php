@@ -9,6 +9,7 @@ class ServiceRequest extends Model
 {
     use HasFactory;
 
+    // Add all fillable fields including 'instructions'
     protected $fillable = [
         'customer_id',
         'service_type',
