@@ -13,7 +13,7 @@ class CreateServiceRequestsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('customer_id');
             $table->string('service_type');
-            $table->integer('duration_minutes');
+            $table->integer('duration_minutes')->default(30);
             $table->text('instructions')->nullable();
             $table->enum('status', ['pending', 'accepted', 'cancelled', 'completed'])->default('pending');
             $table->decimal('estimated_cost', 10, 2)->nullable();
