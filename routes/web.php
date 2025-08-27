@@ -31,11 +31,11 @@ Route::prefix('customer')->group(function () {
 Route::prefix('driver')->group(function () {
     Route::get('/register', function () {
         return view('driver.register');
-    })->name('driver.register.form');
+    })->name('driver.register');
 
     Route::get('/login', function () {
         return view('driver.login');
-    })->name('driver.login.form');
+    })->name('driver.login');
 
     Route::post('/register', [DriverRegisterController::class, 'register'])->name('driver.register');
     Route::post('/login', [DriverLoginController::class, 'login'])->name('driver.login');

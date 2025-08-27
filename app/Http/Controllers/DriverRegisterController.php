@@ -26,6 +26,6 @@ class DriverRegisterController extends Controller
 
         auth()->guard('driver')->login($driver);
 
-        return view('driver.register');
+        return view('driver.login');
     }
 }
