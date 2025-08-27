@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\CustomerLoginController;
 use App\Http\Controllers\Auth\DriverLoginController;
 use App\Http\Controllers\ServiceRequestController;
 use App\Http\Controllers\CustomerDashboardController;
+use App\Http\Controllers\DriverDashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,11 +37,11 @@ Route::prefix('customer')->group(function () {
 Route::prefix('driver')->group(function () {
     Route::get('/register', function () {
         return view('driver.register');
-    })->name('driver.register.form');
+    })->name('driver.register');
 
     Route::get('/login', function () {
         return view('driver.login');
-    })->name('driver.login.form');
+    })->name('driver.login');
 
     Route::post('/register', [DriverRegisterController::class, 'register'])->name('driver.register');
     Route::post('/login', [DriverLoginController::class, 'login'])->name('driver.login');
@@ -57,4 +58,10 @@ Route::middleware('auth:customer')->group(function () {
 
     // Wait time display route
     Route::get('/service-requests/{id}/wait-time', [ServiceRequestController::class, 'showWaitTime'])->name('service_requests.wait_time');
+});
+
+// Protected routes for authenticated drivers
+Route::middleware(['auth:driver'])->group(function () {
+    Route::get('/driver/dashboard', [DriverDashboardController::class, 'showDashboard'])
+        ->name('driver.dashboard');
 });

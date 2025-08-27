@@ -11,14 +11,13 @@ class CreateReviewsTable extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('service_request_id');
             $table->unsignedBigInteger('customer_id');
-            $table->unsignedBigInteger('driver_id')->nullable();
+            $table->unsignedBigInteger('driver_id');
             $table->unsignedTinyInteger('rating')->comment('1 to 5 stars');
-            $table->text('review_text')->nullable();
+            $table->text('review_text');
             $table->timestamps();
 
-            $table->foreign('service_request_id')->references('id')->on('service_requests')->onDelete('cascade');
+            
             $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('driver_id')->references('id')->on('users')->onDelete('set null');
         });
