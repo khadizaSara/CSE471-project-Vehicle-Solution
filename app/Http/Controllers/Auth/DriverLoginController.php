@@ -18,7 +18,7 @@ class DriverLoginController extends Controller
         if (Auth::guard('driver')->attempt(['email' => $credentials['email'], 'password' => $credentials['password'], 'role' => 'driver'])) {
             $request->session()->regenerate();
 
-            return view('driver.login');
+            return redirect()->intended(route('driver.dashboard'));
         }
 
         return response()->json(['message' => 'Invalid credentials'], 401);

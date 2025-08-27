@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\CustomerLoginController;
 use App\Http\Controllers\Auth\DriverLoginController;
 use App\Http\Controllers\ServiceRequestController;
 use App\Http\Controllers\CustomerDashboardController;
+use App\Http\Controllers\DriverDashboardController;
 
 
 Route::get('/', function () {
@@ -54,4 +55,10 @@ Route::middleware('auth:customer')->group(function () {
 
     Route::get('/service-requests/create', [ServiceRequestController::class, 'create'])->name('service_requests.create');
     Route::post('/service-requests', [ServiceRequestController::class, 'store'])->name('service_requests.store');
+});
+
+// Protected routes for authenticated drivers
+Route::middleware(['auth:driver'])->group(function () {
+    Route::get('/driver/dashboard', [DriverDashboardController::class, 'showDashboard'])
+        ->name('driver.dashboard');
 });

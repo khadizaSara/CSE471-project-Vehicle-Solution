@@ -10,6 +10,9 @@ class Driver extends User
     protected $attributes = [
         'role' => 'driver',
     ];
+    protected $fillable = [
+        'name', 'email', 'password', 'role',
+    ];
 
     /**
      * Override newModelQuery to always filter by 'driver' role.

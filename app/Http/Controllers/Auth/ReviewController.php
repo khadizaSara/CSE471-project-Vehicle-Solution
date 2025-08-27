@@ -12,9 +12,9 @@ class ReviewController extends Controller
     {
         $data = $request->validate([
             'service_request_id' => 'required|integer|exists:service_requests,id',
-            'driver_id' => 'nullable|integer|exists:users,id',
+            'driver_id' => 'integer|exists:users,id',
             'rating' => 'required|integer|min:1|max:5',
-            'review_text' => 'nullable|string',
+            'review_text' => 'string',
         ]);
 
         $data['customer_id'] = auth()->id();

@@ -38,6 +38,6 @@ class CustomerLoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('customer.login.form');
+        return redirect()->route('customer.login');
     }
 }
