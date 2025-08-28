@@ -48,4 +48,25 @@ class ServiceRequestController extends Controller
     }
 
     // Other methods...
+    public function cancel(Request $request, $id)
+    {
+        $data = $request->validate([
+            'cancellation_reason' => 'required|string|max:255|min:10',
+        ]);
+
+        $data['customer_id'] = auth()->id();
+        $data['status'] = 'cancelled';
+        $data['duration_minutes'] = 0;
+
+        // Find the service request and update its status
+        $serviceRequest = ServiceRequest::findOrFail($id);
+        $serviceRequest->update($data);
+
+        return redirect()->route('customer.dashboard')
+                         ->with('success', 'Service request cancelled successfully.');
+    }
+
+
+    
+
 }

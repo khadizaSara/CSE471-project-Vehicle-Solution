@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,6 +74,25 @@
                     </div>
                 </div>
             @endforeach
+        @endif
+    </div>
+    <div>
+        <h3>New Notifications</h3>
+        @php $notifications = auth('driver')->user()->unreadNotifications; @endphp
+        @if($notifications->isEmpty())
+            <p>No new notifications.</p>
+        @else
+            <ul>
+            @foreach(auth('driver')->user()->unreadNotifications as $notification)
+                <div>
+                    {{ $notification->data['message'] ?? 'No message' }}
+                    <form method="POST" action="{{ route('notifications.read', $notification->id) }}">
+                        @csrf
+                        <button type="submit">Mark as read</button>
+                    </form>
+                </div>
+            @endforeach
+            </ul>
         @endif
     </div>
 </body>

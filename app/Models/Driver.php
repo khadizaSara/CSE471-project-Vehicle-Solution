@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Notifications\Notifiable;
+
 class Driver extends User
 {
+    use Notifiable;
+
     /**
      * The "type" of user for identification.
      */

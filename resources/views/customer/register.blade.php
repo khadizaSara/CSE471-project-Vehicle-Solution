@@ -3,6 +3,7 @@
 <head>
     <title>Customer Registration</title>
     <script src="https://mizu.sh/client.js" defer></script>
+    <link rel="stylesheet" href="https://matcha.mizu.sh/matcha.css">
 </head>
 <body>
     <h2>Customer Register</h2>

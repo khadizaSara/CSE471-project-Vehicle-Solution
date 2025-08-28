@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\DriverLoginController;
 use App\Http\Controllers\ServiceRequestController;
 use App\Http\Controllers\CustomerDashboardController;
 use App\Http\Controllers\DriverDashboardController;
+use App\Http\Controllers\Auth\DriverAssignmentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -58,10 +59,19 @@ Route::middleware('auth:customer')->group(function () {
 
     // Wait time display route
     Route::get('/service-requests/{id}/wait-time', [ServiceRequestController::class, 'showWaitTime'])->name('service_requests.wait_time');
+    Route::post('/service-requests/{id}/cancel', [ServiceRequestController::class, 'cancel'])->name('service_requests.cancel');
 });
 
 // Protected routes for authenticated drivers
 Route::middleware(['auth:driver'])->group(function () {
     Route::get('/driver/dashboard', [DriverDashboardController::class, 'showDashboard'])
         ->name('driver.dashboard');
+
+    // Driver assignment routes
+    Route::get('/driver-assignments/create', [DriverAssignmentController::class, 'create'])->name('driver-assignments.create');
+    Route::post('/driver-assignments', [DriverAssignmentController::class, 'store'])->name('driver-assignments.store');
+    Route::post('/driver-assignments/{assignment}/accept', [DriverAssignmentController::class, 'accept'])->name('driver-assignments.accept')->middleware('auth:driver');
+    Route::post('/driver-assignments/{assignment}/decline', [DriverAssignmentController::class, 'decline'])->name('driver-assignments.decline')->middleware('auth:driver');
+
+    Route::get('/driver/assignments', [DriverDashboardController::class, 'assignments'])->name('driver.assignments')->middleware('auth:driver');
 });

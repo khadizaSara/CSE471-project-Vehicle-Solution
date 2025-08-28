@@ -35,6 +35,20 @@
         a.servicing-request:hover {
             background-color: #155d8b;
         }
+        a.driver-request {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 20px;
+            padding: 14px 28px;
+            background-color: #1d72b8;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a.driver-request:hover {
+            background-color: #155d8b;
+        }
     </style>
 </head>
 <body>
@@ -42,6 +56,7 @@
         <h1>Welcome, {{ auth()->guard('customer')->user()->name }}!</h1>
         <p>Manage your account and requests below.</p>
         <a href="{{ route('service_requests.create') }}" class="servicing-request">Servicing Request</a>
+        <a href="{{ route('driver-assignments.create') }}" class="driver-request">Request a Driver</a>
     </div>
 </body>
 </html>

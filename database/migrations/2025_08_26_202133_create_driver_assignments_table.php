@@ -17,7 +17,7 @@ class CreateDriverAssignmentsTable extends Migration
             $table->timestamps();
 
             $table->foreign('service_request_id')->references('id')->on('service_requests')->onDelete('cascade');
-            $table->foreign('driver_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('driver_id')->references('id')->on('drivers')->onDelete('cascade');
         });
     }
 
