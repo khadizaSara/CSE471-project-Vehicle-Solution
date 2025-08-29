@@ -16,7 +16,7 @@
 <p>Service Request ID: {{ $serviceRequest->id }}</p>
 
 <p>Estimated wait: <strong>{{ $serviceRequest->duration_minutes }} minutes</strong></p>
-
+<a href="{{ route('service_requests.centre', $serviceRequest->id) }}">See Details In Centre</a>
 <p>Countdown:</p>
 <div id="countdown"></div>
 

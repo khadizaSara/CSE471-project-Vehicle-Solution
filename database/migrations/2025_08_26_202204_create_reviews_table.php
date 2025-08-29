@@ -17,9 +17,9 @@ class CreateReviewsTable extends Migration
             $table->text('review_text');
             $table->timestamps();
 
-            
-            $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('driver_id')->references('id')->on('users')->onDelete('set null');
+
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('set null');
+            $table->foreign('driver_id')->references('id')->on('drivers')->onDelete('set null');
         });
     }
 

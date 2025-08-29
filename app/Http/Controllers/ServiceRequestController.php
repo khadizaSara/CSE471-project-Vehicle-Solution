@@ -65,8 +65,11 @@ class ServiceRequestController extends Controller
         return redirect()->route('customer.dashboard')
                          ->with('success', 'Service request cancelled successfully.');
     }
+    public function show($id)
 
-
-    
+    {   
+        $serviceRequest = ServiceRequest::findOrFail($id);
+        return view('service_requests.centre', compact('serviceRequest'));
+    }
 
 }

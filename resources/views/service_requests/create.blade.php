@@ -36,7 +36,7 @@
     @endif
 
     @else
-        <p>You must <a href="{{ route('customer.login.form') }}">log in</a> as a customer to place a service request.</p>
+        <p>You must <a href="{{ route('customer.login') }}">log in</a> as a customer to place a service request.</p>
     @endauth
 </body>
 </html>

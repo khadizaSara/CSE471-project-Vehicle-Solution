@@ -53,6 +53,13 @@
 </head>
 <body>
     <div class="container">
+        @if (session()->has('status'))
+            <div style="color: green; font-weight: bold;">
+                {{ session('status') }}
+            </div>
+            
+            <a href="{{ route('reviews.index') }}">Leave a Review</a>
+        @endif
         <h1>Welcome, {{ auth()->guard('customer')->user()->name }}!</h1>
         <p>Manage your account and requests below.</p>
         <a href="{{ route('service_requests.create') }}" class="servicing-request">Servicing Request</a>

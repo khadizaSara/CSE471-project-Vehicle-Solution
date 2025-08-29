@@ -5,6 +5,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DriverAssignment;
 use App\Notifications\AssignmentAcceptedNotification;
+use Illuminate\Support\Facades\Log;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class DriverAssignmentController extends Controller
 {
@@ -32,6 +34,8 @@ class DriverAssignmentController extends Controller
         $serviceRequestId = $request->input('service_request_id');
         $drivers = \App\Models\Driver::where('role', 'driver')->get();
 
+        \Log::info('Notifying drivers...'); // <-- Add this line here
+
         foreach ($drivers as $driver) {
             \App\Models\DriverAssignment::create([
                 'service_request_id' => $serviceRequestId,
@@ -45,6 +49,7 @@ class DriverAssignmentController extends Controller
             ]));
         }
 
+
         return redirect()->route('customer.dashboard')->with('status', 'Request sent to all drivers!');
     }
 
@@ -52,13 +57,13 @@ class DriverAssignmentController extends Controller
     public function accept($assignmentId)
     {
         $assignment = \App\Models\DriverAssignment::findOrFail($assignmentId);
-        $assignment->assignment_status = 'accepted';
+        $assignment->assignment_status = 'assigned';
         $assignment->save();
 
         // Notify customer and all drivers
-        $this->notifyAssignmentAccepted($assignment);
+        // $this->notifyAssignmentAccepted($assignment);
 
-        return redirect()->back()->with('status', 'You have accepted the request.');
+        return redirect()->route('driver.dashboard')->with('status', 'You have accepted the request.');
     }
 
     // Driver declines assignment
@@ -88,4 +93,8 @@ class DriverAssignmentController extends Controller
             $driver->notify(new \App\Notifications\AssignmentAcceptedNotification($notificationData));
         }
     }
+    // public function show(){
+    //     $assignments = DriverAssignment::where('driver_id', auth('driver')->user()->id)->get();
+    //     return view('driver.Dashboard', compact('assignments'));
+    // }
 }

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,10 +78,17 @@
         @endif
     </div>
     <div>
+        @if (session()->has('status'))
+            <div style="color: green; font-weight: bold;">
+                {{ session('status') }}
+            </div>
+        @endif
         <h3>New Notifications</h3>
         @php $notifications = auth('driver')->user()->unreadNotifications; @endphp
         @if($notifications->isEmpty())
             <p>No new notifications.</p>
+            Check for requests.
+            <a href="{{ route('driver.assignments') }}">View Requests</a>
         @else
             <ul>
             @foreach(auth('driver')->user()->unreadNotifications as $notification)
@@ -95,5 +103,6 @@
             </ul>
         @endif
     </div>
+
 </body>
 </html>
